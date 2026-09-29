@@ -1,0 +1,6 @@
+com.cs2.tracker
+drawable ic_launcher_bg
+drawable ic_launcher_fg
+mipmap ic_launcher
+string app_name
+style Theme_CS2Tracker

@@ -1,0 +1,8 @@
+com.cs2.tracker.app-pngs-0 E:\桌面\cs2\android\app\build\generated\res\pngs\release
+com.cs2.tracker.app-updated_navigation_xml-1 E:\桌面\cs2\android\app\build\generated\updated_navigation_xml\release
+com.cs2.tracker.app-packageReleaseResources-2 E:\桌面\cs2\android\app\build\intermediates\incremental\release\packageReleaseResources\merged.dir
+com.cs2.tracker.app-packageReleaseResources-3 E:\桌面\cs2\android\app\build\intermediates\incremental\release\packageReleaseResources\stripped.dir
+com.cs2.tracker.app-release-4 E:\桌面\cs2\android\app\build\intermediates\merged_res\release\mergeReleaseResources
+com.cs2.tracker.app-main-5 E:\桌面\cs2\android\app\src\main\res
+com.cs2.tracker.app-release-6 E:\桌面\cs2\android\app\src\release\res
+gradleHome-0 C:\Users\Administrator\.gradle
