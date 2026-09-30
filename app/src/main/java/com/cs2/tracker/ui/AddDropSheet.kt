@@ -30,7 +30,8 @@ import java.time.LocalDate
  * 添加/编辑掉落底部弹窗：
  * - 掉落期信息 + 期/日期两级选择（第1期起~今天）
  * - 物品搜索选择（CSGO-API 目录，带预览图）
- * - 数量 / 金额（负数=支出，如开箱花费）/ 备注
+ * - 金额（负数=支出，如开箱花费）/ 备注
+ * - 无数量输入：一条记录即一件，多件时手动多次添加
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -52,7 +53,6 @@ fun AddDropSheet(
     var itemCat by remember(editing, prefill) { mutableStateOf(editing?.category ?: prefill?.cat ?: "case") }
     var rarityColor by remember(editing, prefill) { mutableStateOf(editing?.rcolor ?: prefill?.rarityColor) }
     var rarityName by remember(editing, prefill) { mutableStateOf(prefill?.rarityName) }
-    var qty by remember(editing) { mutableStateOf((editing?.qty ?: 1).toString()) }
     var price by remember(editing) { mutableStateOf(editing?.price?.takeIf { it != 0.0 }?.let { money(it) } ?: "") }
     var note by remember(editing) { mutableStateOf(editing?.note ?: "") }
     var search by remember { mutableStateOf("") }
@@ -284,36 +284,16 @@ fun AddDropSheet(
             }
             Spacer(Modifier.height(12.dp))
 
-            // 数量 + 金额
-            Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                Column(Modifier.weight(1f)) {
-                    Text("数量", fontSize = 12.sp, color = TextDim)
-                    Spacer(Modifier.height(6.dp))
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        OutlinedButton(onClick = { qty = ((qty.toIntOrNull() ?: 1) - 1).coerceAtLeast(1).toString() }, contentPadding = PaddingValues(0.dp), modifier = Modifier.size(44.dp)) {
-                            Text("−", fontSize = 18.sp)
-                        }
-                        OutlinedTextField(
-                            value = qty, onValueChange = { qty = it.filter(Char::isDigit).ifEmpty { "1" } },
-                            modifier = Modifier.weight(1f).padding(horizontal = 4.dp),
-                            singleLine = true
-                        )
-                        OutlinedButton(onClick = { qty = ((qty.toIntOrNull() ?: 1) + 1).toString() }, contentPadding = PaddingValues(0.dp), modifier = Modifier.size(44.dp)) {
-                            Text("＋", fontSize = 16.sp)
-                        }
-                    }
-                }
-                Column(Modifier.weight(1.2f)) {
-                    Text("金额 ¥（负数=支出）", fontSize = 12.sp, color = TextDim)
-                    Spacer(Modifier.height(6.dp))
-                    OutlinedTextField(
-                        value = price, onValueChange = { price = it },
-                        singleLine = true,
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
-                        placeholder = { Text("0.00", fontSize = 13.sp) }
-                    )
-                }
-            }
+            // 金额（单件到手价；多件请多次添加）
+            Text("金额 ¥（负数=支出）", fontSize = 12.sp, color = TextDim)
+            Spacer(Modifier.height(6.dp))
+            OutlinedTextField(
+                value = price, onValueChange = { price = it },
+                modifier = Modifier.fillMaxWidth(),
+                singleLine = true,
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
+                placeholder = { Text("0.00", fontSize = 13.sp) }
+            )
             Spacer(Modifier.height(12.dp))
 
             OutlinedTextField(
@@ -335,11 +315,10 @@ fun AddDropSheet(
                 Button(
                     onClick = {
                         if (itemName.isBlank()) { DropStore.toast("请先选择或输入物品名称"); return@Button }
-                        val q = qty.toIntOrNull()?.coerceAtLeast(1) ?: 1
                         val pr = price.toDoubleOrNull() ?: 0.0
                         val drop = Drop(
                             id = editing?.id ?: DropStore.newId(),
-                            name = itemName, date = selectedDate, qty = q, price = pr,
+                            name = itemName, date = selectedDate, qty = 1, price = pr,
                             note = note.trim(), category = itemCat,
                             rarity = editing?.rarity ?: "base",
                             img = itemImg, rcolor = rarityColor

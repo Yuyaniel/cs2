@@ -34,14 +34,15 @@ CS2 每周掉落与收益支出记录的原生 Android 应用。UI 与交互延�
 - Android SDK（compileSdk 35 / minSdk 26 / targetSdk 35）
 - Android Studio 自带 gradle wrapper 首次会自动下载
 
-命令行构建：
+命令行构建（已内置 Gradle Wrapper 9.5.0）：
 
 ```bash
-# 首次需先生成 gradle wrapper（或在 Android Studio 打开一次自动生成）
-gradle wrapper --gradle-version 8.7
 ./gradlew assembleDebug
 # 产物：app/build/outputs/apk/debug/app-debug.apk
 ```
+
+> 若提示找不到 SDK，在根目录创建 `local.properties`：
+> `sdk.dir=C:\\Users\\<你的用户名>\\AppData\\Local\\Android\\Sdk`
 
 ## 数据兼容
 

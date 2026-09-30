@@ -6,8 +6,8 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.DateRange
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.*
@@ -50,7 +50,7 @@ private fun App() {
     val tabs = listOf(
         Tab("首页", Icons.Default.DateRange),
         Tab("统计", Icons.Default.Star),
-        Tab("搜索", Icons.Default.Search),
+        Tab("添加", Icons.Default.Add),
         Tab("设置", Icons.Default.Settings)
     )
     var tab by remember { mutableIntStateOf(0) }
